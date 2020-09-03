@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Conversor de Medidas</title>
+    <script>
+        
+        var objConverter = {
+            undConversao:"",
+            valorConversao:0,            
+            calcular:function(){
+                let valoresConvertidos=[];
+
+                if (this.undConversao=="m") {
+                   let valorPes = this.valorConversao*3.28083;
+                   let valorPol = this.valorConversao*39.37;
+                    valoresConvertidos[0] = valorPes;
+                    valoresConvertidos[1] = valorPol;
+                } else if(this.undConversao=="cm") {
+                   let valorPes = this.valorConversao*0.0328;
+                   let valorPol = this.valorConversao*0.3937;
+                    valoresConvertidos[0] = valorPes;
+                    valoresConvertidos[1] = valorPol;
+                }
+                return valoresConvertidos;
+            }
+        };
+        var controller = {
+            obterDados: function() {
+                let valorComp = parseFloat(document.getElementById("compMet").value);
+                let undComp = document.getElementById("undComp").value;
+                return [undComp,valorComp];
+            },
+            exibirResultado:function(valor1,valor2){
+                document.getElementById("compPes").value = valor1;
+                document.getElementById("compPol").value = valor2;
+            }
+        };
+
+        
+
+        function converter() {
+           let dados = controller.obterDados();
+
+           objConverter.undConversao = dados[0];
+           objConverter.valorConversao = dados[1];
+           let valoresConvertidos = objConverter.calcular();
+
+           
+
+            controller.exibirResultado(valoresConvertidos[0],valoresConvertidos[1]);
+        };
+
+        window.onload = function(){
+            converter();
+        };
+        
+
+    </script>
+</head>
+<body >
+    <div class="container mt-2"> 
+        
+        <div class="jumbotron">
+            <h3 class="text-center">Conversor de medidas</h3>       
+            <hr>
+            <div class="row">
+                <div class="form-control col-md-6 col-sm-12 mb-2 ">
+                    <div class="row">
+                        <div class="col-md-3 mb-2 mt-2">
+                            <select class="form-control col-sm-12" onchange="converter()" name="und" id="undComp">
+                                <option value="m">Metros</option>
+                                <option value="cm">Centímetros</option>
+                            </select> 
+                        </div> 
+                        <div class="col-md-9 col-sm-12 mt-2">                                              
+                            <input type="text" class="form-control" value="1"  id="compMet" placeholder="Digite o comprimento para conversão ">
+                        </div>
+                        <button class="btn btn-primary text-center mt-5 ml-3 " onclick="converter()">Converter</button>
+                    </div>    
+                </div>
+                <div class="col-md-6 col-sm-12 ">
+                    <div class="form-control col-sm-12 mb-2">
+                        <label for="compPes">Resultado em Pés</label>
+                        <input type="text" class="form-control" id="compPes" placeholder="Resultado em Pés." disabled>
+                    </div>
+                    <div class="form-control  col-sm-12 ">
+                        <label for="compPol">Resultado em Polegadas</label>
+                        <input type="text" class="form-control" id="compPol" placeholder="Digite o comprimento " disabled>
+                    </div>
+                </div>
+            </div>                
+
+        </div>
+
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
